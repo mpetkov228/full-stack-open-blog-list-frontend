@@ -7,6 +7,9 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -69,19 +72,47 @@ const App = () => {
     </form>
   );
 
-  const showBlogs = () => (
+  const userDisplay = () => (
     <div>
       <h2>Blogs</h2>
       <p>{user.name} logged in <button onClick={logout}>log out</button></p>
       {blogs.map(blog => 
         <Blog key={blog.id} blog={blog} />
       )}
+      <form>
+        <h2>create new</h2>
+        <div>
+          title: <input 
+                   type="text" 
+                   name="title" 
+                   value={title} 
+                   onChange={({ target }) => setTitle(target.value)}
+                 />
+        </div>
+        <div>
+          author: <input 
+                    type="text" 
+                    name="author" 
+                    value={author} 
+                    onChange={({ target }) => setAuthor(target.value)}
+                  />
+        </div>
+        <div>
+          url: <input 
+                 type="text" 
+                 name="url" 
+                 value={url}
+                 onChange={({ target }) => setUrl(target.value)}
+                />
+        </div>
+        <button type="submit">create</button>
+      </form>
     </div>
   );
 
   return (
     <div>
-      {user === null ? loginForm() : showBlogs()}
+      {user === null ? loginForm() : userDisplay()}
     </div>
   )
 };
