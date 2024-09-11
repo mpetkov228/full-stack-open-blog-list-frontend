@@ -44,6 +44,28 @@ const App = () => {
     }
   };
 
+  const handleCreate = async (event) => {
+    event.preventDefault();
+
+    const data = {
+      title,
+      author,
+      url,
+      user
+    };
+
+    try {
+      const result = await blogService.create(data);
+      console.log(result);
+    } catch (exception) {
+      console.log(exception);
+    }
+
+    setTitle('');
+    setAuthor('');
+    setUrl('');
+  };
+
   const logout = () => {
     window.localStorage.removeItem('user');
     setUser(null);
@@ -79,7 +101,7 @@ const App = () => {
       {blogs.map(blog => 
         <Blog key={blog.id} blog={blog} />
       )}
-      <form>
+      <form onSubmit={handleCreate}>
         <h2>create new</h2>
         <div>
           title: <input 
