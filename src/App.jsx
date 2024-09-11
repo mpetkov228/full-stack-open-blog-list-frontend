@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Blog from './components/Blog';
+import Notification from './components/Notification';
 import blogService from './services/blogs';
 import loginService from './services/login';
 
@@ -11,6 +12,8 @@ const App = () => {
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
   const [user, setUser] = useState(null);
+  const [notification, setNotification] = useState('');
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     blogService.getAll().then(blogs => 
@@ -24,6 +27,12 @@ const App = () => {
       setUser(JSON.parse(loggedUserJSON));
     }
   }, []);
+
+  const removeNotification = () => {
+    setTimeout(() => {
+      setNotification('');
+    }, 5000);
+  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -39,9 +48,14 @@ const App = () => {
       setUser(user);
       setUsername('');
       setPassword('');
+      setNotification(`${user.username} logged in`);
+      setIsError(false);
     } catch (exception) {
-      console.log(exception);
+      setNotification('wrong username or password');
+      setIsError(true);
     }
+
+    removeNotification();
   };
 
   const handleCreate = async (event) => {
@@ -55,15 +69,18 @@ const App = () => {
     };
 
     try {
-      const result = await blogService.create(data);
-      console.log(result);
+      await blogService.create(data);
+      setNotification(`a new blog ${data.title} by ${data.author} added`);
+      setIsError(false);
     } catch (exception) {
-      console.log(exception);
+      setNotification(exception.message);
+      setIsError(true);
     }
 
     setTitle('');
     setAuthor('');
     setUrl('');
+    removeNotification();
   };
 
   const logout = () => {
@@ -74,6 +91,7 @@ const App = () => {
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <h2>log in to application</h2>
+      <Notification message={notification} isError={isError} />
       <div>
         username <input 
                    type="text" 
@@ -97,6 +115,7 @@ const App = () => {
   const userDisplay = () => (
     <div>
       <h2>Blogs</h2>
+      <Notification message={notification} isError={isError} />
       <p>{user.name} logged in <button onClick={logout}>log out</button></p>
       {blogs.map(blog => 
         <Blog key={blog.id} blog={blog} />
