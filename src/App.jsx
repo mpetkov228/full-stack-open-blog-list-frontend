@@ -1,17 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Blog from './components/Blog';
 import Notification from './components/Notification';
 import blogService from './services/blogs';
 import loginService from './services/login';
 import BlogForm from './components/BlogForm';
+import Togglable from './components/Togglable';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
   const [user, setUser] = useState(null);
   const [notification, setNotification] = useState('');
   const [isError, setIsError] = useState(false);
@@ -28,6 +26,8 @@ const App = () => {
       setUser(JSON.parse(loggedUserJSON));
     }
   }, []);
+
+  const blogFormRef = useRef();
 
   const removeNotification = () => {
     setTimeout(() => {
@@ -59,15 +59,8 @@ const App = () => {
     removeNotification();
   };
 
-  const handleCreate = async (event) => {
-    event.preventDefault();
-
-    const data = {
-      title,
-      author,
-      url,
-      user
-    };
+  const handleCreate = async (data) => {
+    blogFormRef.current.toggleVisibility();
 
     try {
       await blogService.create(data);
@@ -78,9 +71,6 @@ const App = () => {
       setIsError(true);
     }
 
-    setTitle('');
-    setAuthor('');
-    setUrl('');
     removeNotification();
   };
 
@@ -116,20 +106,21 @@ const App = () => {
   const userDisplay = () => (
     <div>
       <h2>Blogs</h2>
+
       <Notification message={notification} isError={isError} />
+
       <p>{user.name} logged in <button onClick={logout}>log out</button></p>
+
+      <Togglable buttonLabel="new note" ref={blogFormRef}>
+        <BlogForm 
+          addBlog={handleCreate}
+          user={user}
+        />
+      </Togglable>
+
       {blogs.map(blog => 
         <Blog key={blog.id} blog={blog} />
       )}
-      <BlogForm 
-        handleSubmit={handleCreate}
-        title={title}
-        handleTitleChange={({ target }) => setTitle(target.value)}
-        author={author}
-        handleAuthorChange={({ target }) => setAuthor(target.value)}
-        url={url}
-        handleUrlChange={({ target }) => setUrl(target.value)}
-      />
     </div>
   );
 
