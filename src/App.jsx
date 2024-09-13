@@ -3,6 +3,7 @@ import Blog from './components/Blog';
 import Notification from './components/Notification';
 import blogService from './services/blogs';
 import loginService from './services/login';
+import BlogForm from './components/BlogForm';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -120,34 +121,15 @@ const App = () => {
       {blogs.map(blog => 
         <Blog key={blog.id} blog={blog} />
       )}
-      <form onSubmit={handleCreate}>
-        <h2>create new</h2>
-        <div>
-          title: <input 
-                   type="text" 
-                   name="title" 
-                   value={title} 
-                   onChange={({ target }) => setTitle(target.value)}
-                 />
-        </div>
-        <div>
-          author: <input 
-                    type="text" 
-                    name="author" 
-                    value={author} 
-                    onChange={({ target }) => setAuthor(target.value)}
-                  />
-        </div>
-        <div>
-          url: <input 
-                 type="text" 
-                 name="url" 
-                 value={url}
-                 onChange={({ target }) => setUrl(target.value)}
-                />
-        </div>
-        <button type="submit">create</button>
-      </form>
+      <BlogForm 
+        handleSubmit={handleCreate}
+        title={title}
+        handleTitleChange={({ target }) => setTitle(target.value)}
+        author={author}
+        handleAuthorChange={({ target }) => setAuthor(target.value)}
+        url={url}
+        handleUrlChange={({ target }) => setUrl(target.value)}
+      />
     </div>
   );
 
