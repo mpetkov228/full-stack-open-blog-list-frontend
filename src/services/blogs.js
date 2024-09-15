@@ -14,4 +14,12 @@ const create = ({ title, author, url, user }) => {
   );
 };
 
-export default { getAll, create };
+const update = (id, blog) => {
+  axios.put(
+    `${baseUrl}/${id}`, 
+    blog, 
+    { headers: { 'Authorization': `Bearer ${blog.user.token}`}}
+  );
+};
+
+export default { getAll, create, update };

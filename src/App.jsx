@@ -74,6 +74,10 @@ const App = () => {
     removeNotification();
   };
 
+  const handleUpdate = async (id, updatedBlog) => {
+    await blogService.update(id, updatedBlog);
+  };
+
   const logout = () => {
     window.localStorage.removeItem('user');
     setUser(null);
@@ -119,7 +123,11 @@ const App = () => {
       </Togglable>
 
       {blogs.map(blog => 
-        <Blog key={blog.id} blog={blog} />
+        <Blog 
+          key={blog.id} 
+          blog={blog} 
+          handleUpdate={handleUpdate}
+        />
       )}
     </div>
   );

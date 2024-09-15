@@ -1,7 +1,11 @@
 import { useState } from 'react';
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, handleUpdate }) => {
   const [view, setView] = useState(false);
+  const [blogLikes, setBlogLikes] = useState(blog.likes);
+
+  const userId = blog.user.id;
+  const { id, title, author, url } = blog;
 
   const blogStyle = {
     paddingTop: 10,
@@ -13,6 +17,17 @@ const Blog = ({ blog }) => {
 
   const toggleView = () => setView(!view);
 
+  const updateLikes = async () => {
+    await handleUpdate(id, { 
+      title, 
+      author, 
+      url, 
+      user: userId, 
+      likes: blogLikes + 1
+    });
+    setBlogLikes(blogLikes + 1);
+  };
+
   return (
     <div style={blogStyle}>
       <div>
@@ -20,8 +35,8 @@ const Blog = ({ blog }) => {
         {view 
           ? <div>
               <div>{blog.url}</div>
-              <div>likes {blog.likes} <button>like</button></div>
-              <div>{blog.author}</div>
+              <div>likes {blogLikes} <button onClick={updateLikes}>like</button></div>
+              <div>{blog.user.name}</div>
             </div>
           : null}
       </div>
