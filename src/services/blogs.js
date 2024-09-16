@@ -22,4 +22,8 @@ const update = (id, blog) => {
   );
 };
 
-export default { getAll, create, update };
+const del = id => {
+  axios.delete(`${baseUrl}/${id}`, { headers: { 'Authorization': `Bearer ${blog.user.token}`}});
+};
+
+export default { getAll, create, update, del };

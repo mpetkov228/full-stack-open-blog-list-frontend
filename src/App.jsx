@@ -78,6 +78,10 @@ const App = () => {
     await blogService.update(id, updatedBlog);
   };
 
+  const handleDelete = async (id) => {
+    await blogService.del(id);
+  }
+
   const logout = () => {
     window.localStorage.removeItem('user');
     setUser(null);
@@ -129,6 +133,7 @@ const App = () => {
           key={blog.id} 
           blog={blog} 
           handleUpdate={handleUpdate}
+          removeBlog={handleDelete}
         />
       )}
     </div>
