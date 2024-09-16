@@ -78,9 +78,9 @@ const App = () => {
     await blogService.update(id, updatedBlog);
   };
 
-  const handleDelete = async (id) => {
-    await blogService.del(id);
-  }
+  const handleDelete = async (id, token) => {
+    await blogService.del(id, token);
+  };
 
   const logout = () => {
     window.localStorage.removeItem('user');
@@ -134,6 +134,7 @@ const App = () => {
           blog={blog} 
           handleUpdate={handleUpdate}
           removeBlog={handleDelete}
+          user={user}
         />
       )}
     </div>
