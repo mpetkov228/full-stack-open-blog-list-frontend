@@ -12,12 +12,12 @@ const Notification = ({ message, isError }) => {
   if (message === '') {
     return null;
   }
-  
+
   return (
     <div style={styles}>
-        {message}
+      {message}
     </div>
-  )
+  );
 };
 
 export default Notification;

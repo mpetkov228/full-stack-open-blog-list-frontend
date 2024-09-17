@@ -9,16 +9,16 @@ const getAll = () => {
 const create = ({ title, author, url, user }) => {
   axios.post(
     baseUrl,
-    { title, author, url }, 
-    { headers: { 'Authorization': `Bearer ${user.token}` }}
+    { title, author, url },
+    { headers: { 'Authorization': `Bearer ${user.token}` } }
   );
 };
 
 const update = (id, blog) => {
   axios.put(
-    `${baseUrl}/${id}`, 
-    blog, 
-    { headers: { 'Authorization': `Bearer ${blog.user.token}`}}
+    `${baseUrl}/${id}`,
+    blog,
+    { headers: { 'Authorization': `Bearer ${blog.user.token}` } }
   );
 };
 

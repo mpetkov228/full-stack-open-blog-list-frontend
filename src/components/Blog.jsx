@@ -18,11 +18,11 @@ const Blog = ({ blog, user, handleUpdate, removeBlog }) => {
   const toggleView = () => setView(!view);
 
   const updateLikes = async () => {
-    await handleUpdate(id, { 
-      title, 
-      author, 
-      url, 
-      user: userId, 
+    await handleUpdate(id, {
+      title,
+      author,
+      url,
+      user: userId,
       likes: blogLikes + 1
     });
     setBlogLikes(blogLikes + 1);
@@ -39,17 +39,17 @@ const Blog = ({ blog, user, handleUpdate, removeBlog }) => {
     <div style={blogStyle}>
       <div>
         {blog.title} {blog.author} <button onClick={toggleView}>view</button>
-        {view 
+        {view
           ? <div>
-              <div>{blog.url}</div>
-              <div>likes {blogLikes} <button onClick={updateLikes}>like</button></div>
-              <div>{blog.user.name}</div>
-              {
-                user.username === blog.user.username 
-                  ? <button onClick={handleDelete}>remove</button>
-                  : null
-              }
-            </div>
+            <div>{blog.url}</div>
+            <div>likes {blogLikes} <button onClick={updateLikes}>like</button></div>
+            <div>{blog.user.name}</div>
+            {
+              user.username === blog.user.username
+                ? <button onClick={handleDelete}>remove</button>
+                : null
+            }
+          </div>
           : null}
       </div>
     </div>

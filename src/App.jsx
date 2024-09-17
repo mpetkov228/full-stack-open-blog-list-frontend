@@ -15,7 +15,7 @@ const App = () => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    blogService.getAll().then(blogs => 
+    blogService.getAll().then(blogs =>
       setBlogs(blogs)
     );
   }, []);
@@ -92,20 +92,20 @@ const App = () => {
       <h2>log in to application</h2>
       <Notification message={notification} isError={isError} />
       <div>
-        username <input 
-                   type="text" 
-                   name="username" 
-                   value={username}
-                   onChange={({ target }) => setUsername(target.value)}
-                 />
+        username <input
+          type="text"
+          name="username"
+          value={username}
+          onChange={({ target }) => setUsername(target.value)}
+        />
       </div>
       <div>
-        password <input 
-                   type="password" 
-                   name="password"
-                   value={password}
-                   onChange={({ target }) => setPassword(target.value)}
-                 />
+        password <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+        />
       </div>
       <button type="submit">Log in</button>
     </form>
@@ -120,7 +120,7 @@ const App = () => {
       <p>{user.name} logged in <button onClick={logout}>log out</button></p>
 
       <Togglable buttonLabel="new note" ref={blogFormRef}>
-        <BlogForm 
+        <BlogForm
           addBlog={handleCreate}
           user={user}
         />
@@ -128,15 +128,15 @@ const App = () => {
 
       {blogs
         .sort((a, b) => b.likes - a.likes)
-        .map(blog => 
-        <Blog 
-          key={blog.id} 
-          blog={blog} 
-          handleUpdate={handleUpdate}
-          removeBlog={handleDelete}
-          user={user}
-        />
-      )}
+        .map(blog =>
+          <Blog
+            key={blog.id}
+            blog={blog}
+            handleUpdate={handleUpdate}
+            removeBlog={handleDelete}
+            user={user}
+          />
+        )}
     </div>
   );
 
@@ -144,7 +144,7 @@ const App = () => {
     <div>
       {user === null ? loginForm() : userDisplay()}
     </div>
-  )
+  );
 };
 
 export default App;
