@@ -40,12 +40,12 @@ const Blog = ({ blog, user, handleUpdate, removeBlog }) => {
     <div style={blogStyle}>
       <div className="blog">
         <div className="initialView">
-          <span className="blogInfo">{blog.title} {blog.author}</span> <button onClick={toggleView}>view</button>
+          <span className="blogInfo">{blog.title} {blog.author}</span> <button className="viewBtn" onClick={toggleView}>view</button>
         </div>
         {view
           ? <div className="extendedView">
-            <div>{blog.url}</div>
-            <div>likes {blogLikes} <button onClick={updateLikes}>like</button></div>
+            <div className="url">{blog.url}</div>
+            <div><span className="likes">likes {blogLikes}</span> <button onClick={updateLikes}>like</button></div>
             <div>{blog.user.name}</div>
             {
               user.username === blog.user.username

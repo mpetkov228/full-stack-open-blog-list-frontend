@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Blog from './Blog';
 
-test('render blog', () => {
+
+describe('blog component', () => {
   const blog = {
     id: 1,
     title: 'Test blog',
@@ -10,14 +12,38 @@ test('render blog', () => {
     likes: 0,
     user: {
       id: 1,
+      username: 'root'
     }
   };
 
-  const { container } = render(<Blog blog={blog} />);
+  const testUser = {
+    name: 'Test name',
+    username: 'Test username'
+  }
 
-  const blogInfo = container.querySelector('.blogInfo');
-  const extendedView = container.querySelector('.extendedView');
+  test('render blog', () => {
+    const { container } = render(<Blog blog={blog} />);
 
-  expect(blogInfo.textContent).toBe('Test blog Test author');
-  expect(extendedView).toBeNull();
+    const blogInfo = container.querySelector('.blogInfo');
+    const extendedView = container.querySelector('.extendedView');
+        
+    expect(blogInfo.textContent).toBe('Test blog Test author');
+    expect(extendedView).toBeNull();
+  });
+
+  test('show likes and url on click', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Blog blog={blog} user={testUser} />);
+
+    const button = container.querySelector('.viewBtn');
+    await user.click(button);
+
+    const extendedView = container.querySelector('.extendedView');
+    const url = container.querySelector('.url');
+    const likes = container.querySelector('.likes');
+
+    expect(extendedView).toBeDefined();
+    expect(url.textContent).toBe('Test url');
+    expect(likes.textContent).toBe('likes 0');
+  });
 });
