@@ -15,7 +15,9 @@ test('render blog', () => {
 
   const { container } = render(<Blog blog={blog} />);
 
-  const element = container.querySelector('.defaultView');
+  const blogInfo = container.querySelector('.blogInfo');
+  const extendedView = container.querySelector('.extendedView');
 
-  expect(element.textContent).toBe('Test blog Test author');
+  expect(blogInfo.textContent).toBe('Test blog Test author');
+  expect(extendedView).toBeNull();
 });
