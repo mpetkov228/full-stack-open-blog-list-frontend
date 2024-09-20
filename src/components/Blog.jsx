@@ -38,8 +38,10 @@ const Blog = ({ blog, user, handleUpdate, removeBlog }) => {
 
   return (
     <div style={blogStyle}>
-      <div>
-        {blog.title} {blog.author} <button onClick={toggleView}>view</button>
+      <div className="blog">
+        <div>
+          <span className="defaultView">{blog.title} {blog.author}</span> <button onClick={toggleView}>view</button>
+        </div>
         {view
           ? <div>
             <div>{blog.url}</div>
@@ -57,11 +59,11 @@ const Blog = ({ blog, user, handleUpdate, removeBlog }) => {
   );
 };
 
-Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  handleUpdate: PropTypes.func.isRequired,
-  removeBlog: PropTypes.func.isRequired
-};
+// Blog.propTypes = {
+//   blog: PropTypes.object.isRequired,
+//   user: PropTypes.object.isRequired,
+//   handleUpdate: PropTypes.func.isRequired,
+//   removeBlog: PropTypes.func.isRequired
+// };
 
 export default Blog;
