@@ -45,7 +45,7 @@ const Blog = ({ blog, user, handleUpdate, removeBlog }) => {
         {view
           ? <div className="extendedView">
             <div className="url">{blog.url}</div>
-            <div><span className="likes">likes {blogLikes}</span> <button onClick={updateLikes}>like</button></div>
+            <div><span className="likes">likes {blogLikes}</span> <button className="likeBtn" onClick={updateLikes}>like</button></div>
             <div>{blog.user.name}</div>
             {
               user.username === blog.user.username

@@ -26,7 +26,7 @@ describe('blog component', () => {
 
     const blogInfo = container.querySelector('.blogInfo');
     const extendedView = container.querySelector('.extendedView');
-        
+
     expect(blogInfo.textContent).toBe('Test blog Test author');
     expect(extendedView).toBeNull();
   });
@@ -45,5 +45,23 @@ describe('blog component', () => {
     expect(extendedView).toBeDefined();
     expect(url.textContent).toBe('Test url');
     expect(likes.textContent).toBe('likes 0');
+  });
+
+  test('like button click twice', async () => {
+    const user = userEvent.setup();
+    const mockHandler = vi.fn((id, blog) => blog.likes++ );
+
+    const { container } = render(<Blog blog={blog} user={testUser} handleUpdate={mockHandler} />);
+
+    const viewBtn = container.querySelector('.viewBtn');
+    await user.click(viewBtn);
+
+    const likeBtn = container.querySelector('.likeBtn');
+    const likes = container.querySelector('.likes');
+    await user.click(likeBtn);
+    await user.click(likeBtn);
+
+    expect(mockHandler.mock.calls).toHaveLength(2);
+    expect(likes.textContent).toBe('likes 2');
   });
 });
