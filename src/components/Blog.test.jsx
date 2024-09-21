@@ -19,7 +19,7 @@ describe('blog component', () => {
   const testUser = {
     name: 'Test name',
     username: 'Test username'
-  }
+  };
 
   test('render blog', () => {
     const { container } = render(<Blog blog={blog} />);
