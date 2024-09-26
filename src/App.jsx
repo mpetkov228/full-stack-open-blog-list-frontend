@@ -93,6 +93,7 @@ const App = () => {
       <Notification message={notification} isError={isError} />
       <div>
         username <input
+          data-testid="username"
           type="text"
           name="username"
           value={username}
@@ -101,6 +102,7 @@ const App = () => {
       </div>
       <div>
         password <input
+          data-testid="password"
           type="password"
           name="password"
           value={password}
